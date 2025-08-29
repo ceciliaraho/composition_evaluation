@@ -20,15 +20,19 @@
     background: var(--bg);
     color: var(--text);
   }
-  .wrap { max-width: 700px; margin: 24px auto; padding: 0 16px 32px; }
-  h1 { margin: 6px 0 8px; font-size: 26px; }
-  p.sub { color: var(--muted); margin: 0 0 16px; }
-  /* Horizontal strip of square cards */
+  .wrap{
+    max-width: 100%;
+    margin: 24px auto;
+    padding: 0 16px 32px;
+  }
+
+/* UNA SOLA RIGA: 5 colonne fluide, niente scrollbar */
   .strip{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(160px, 28vw, 260px), 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 16px;
-    overflow: visible;
+    overflow: visible;   /* niente scroll */
+    padding: 6px 0 12px;
   }
   
   .card {
@@ -49,15 +53,18 @@
     background:#9dc8e1;
     border: 1px solid rgba(0,0,0,.05);
     color: var(--text);
-    padding: 8px 10px;
+    padding: clamp(6px, 1.2vw, 10px);
     border-radius: 12px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: clamp(10px, 1.2vw, 14px);
     text-align: center;
     backdrop-filter: blur(2px);
+    overflow: hidden;
+    text-overflow: ellipsis;    /* "…" se troppo lungo */
   }
   .playbtn {
-    width: 60px; height: 60px;
+    width: clamp(40px, 8vw, 72px);
+    height: clamp(40px, 8vw, 72px);
     border-radius: 50%;
     background: #9dc8e1;
     color: #fff;
@@ -68,7 +75,7 @@
     box-shadow: 0 6px 16px rgba(0,0,0,.20);
   }
   .playbtn:hover { transform: scale(1.04); filter: brightness(1.05); }
-  .playbtn .icon { font-size: 30px; line-height: 1; transform: translateX(2px); }
+  .playbtn .icon { font-size: clamp(18px, 2.4vw, 30px); transform: translateX(1px); line-height: 1; }
   .card.playing .playbtn { background: #10b981; }
   .card.playing .playbtn .icon { transform: none; }
   .progress {
