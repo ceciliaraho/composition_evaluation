@@ -34,7 +34,21 @@
     overflow: visible;   /* niente scroll */
     padding: 6px 0 12px;
   }
-  
+  /* MOBILE: passa a strip scorrevole orizzontale (più comodo) */
+  @media (max-width: 740px){
+    .strip{
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: clamp(140px, 42vw, 200px); /* card larghe e leggibili */
+      gap: 12px;
+      overflow-x: auto;            /* swipe orizzontale */
+      overflow-y: hidden;
+      padding: 6px 2px 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .strip::-webkit-scrollbar{ height: 8px; }
+    .strip::-webkit-scrollbar-thumb{ background: #d1d5db; border-radius: 6px; }
+
   .card {
     position: relative;
     background: var(--card);
