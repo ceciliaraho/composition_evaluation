@@ -24,17 +24,13 @@
   h1 { margin: 6px 0 8px; font-size: 26px; }
   p.sub { color: var(--muted); margin: 0 0 16px; }
   /* Horizontal strip of square cards */
-  .strip {
+  .strip{
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(180px, 220px);
-    gap: 14px;
-    overflow-x: auto;
-    padding: 6px 2px 12px;
-    -webkit-overflow-scrolling: touch;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(160px, 28vw, 260px), 1fr));
+    gap: 16px;
+    overflow: visible;
   }
-  .strip::-webkit-scrollbar { height: 10px; }
-  .strip::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 6px; }
+  
   .card {
     position: relative;
     background: var(--card);
