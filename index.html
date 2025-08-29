@@ -1,3 +1,191 @@
-<!doctype html><meta charset="utf-8">
-<title>OK</title><h1>GitHub Pages: It works ✅</h1>
-<p>Se vedi questa pagina, Pages è attivo.</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Composition Gallery</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --text: #111;
+    --muted: #6b7280;
+    --card: #fff;
+    --border: #e5e7eb;
+    --accent: #111;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+    background: var(--bg);
+    color: var(--text);
+  }
+  .wrap { max-width: 1000px; margin: 24px auto; padding: 0 16px 32px; }
+  h1 { margin: 6px 0 8px; font-size: 26px; }
+  p.sub { color: var(--muted); margin: 0 0 16px; }
+  /* Horizontal strip of square cards */
+  .strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(180px, 220px);
+    gap: 14px;
+    overflow-x: auto;
+    padding: 6px 2px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .strip::-webkit-scrollbar { height: 10px; }
+  .strip::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 6px; }
+  .card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .card .title {
+    position: absolute;
+    left: 10px; right: 10px; bottom: 10px;
+    background:#9dc8e1;
+    border: 1px solid rgba(0,0,0,.05);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    backdrop-filter: blur(2px);
+  }
+  .playbtn {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: #9dc8e1;
+    color: #fff;
+    display: grid; place-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .12s ease, filter .12s ease, background .12s ease;
+    box-shadow: 0 6px 16px rgba(0,0,0,.20);
+  }
+  .playbtn:hover { transform: scale(1.04); filter: brightness(1.05); }
+  .playbtn .icon { font-size: 30px; line-height: 1; transform: translateX(2px); }
+  .card.playing .playbtn { background: #10b981; }
+  .card.playing .playbtn .icon { transform: none; }
+  .progress {
+    position: absolute; left: 10px; right: 10px; bottom: 56px;
+    height: 6px; background: rgba(0,0,0,.08); border-radius: 999px; overflow: hidden;
+    display: none;
+  }
+  .progress span { display: block; height: 100%; width: 0%; background: var(--accent); }
+  .card.playing .progress { display: block; }
+  /* Accessible focus */
+  .playbtn:focus { outline: 3px solid #93c5fd; outline-offset: 3px; }
+  /* Small screens: make cards slightly smaller */
+  @media (max-width: 420px) {
+    .strip { grid-auto-columns: minmax(160px, 180px); gap: 12px; }
+    .playbtn { width: 64px; height: 64px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="strip">
+      
+    <div class="card" data-src="pranayama.mp3">
+      <audio preload="metadata" src="pranayama.mp3"></audio>
+      <div class="playbtn" aria-label="Play/Pause" role="button" tabindex="0">
+        <span class="icon">►</span>
+      </div>
+      <div class="title">Pranayama </div>
+      <div class="progress"><span></span></div>
+    </div>
+    
+
+    <div class="card" data-src="chanting.mp3">
+      <audio preload="metadata" src="chanting.mp3"></audio>
+      <div class="playbtn" aria-label="Play/Pause" role="button" tabindex="0">
+        <span class="icon">►</span>
+      </div>
+      <div class="title">Chanting</div>
+      <div class="progress"><span></span></div>
+    </div>
+    
+
+    <div class="card" data-src="viparita_swasa.mp3">
+      <audio preload="metadata" src="viparita_swasa.mp3"></audio>
+      <div class="playbtn" aria-label="Play/Pause" role="button" tabindex="0">
+        <span class="icon">►</span>
+      </div>
+      <div class="title">Viparita Swasa </div>
+      <div class="progress"><span></span></div>
+    </div>
+    
+    
+
+    <div class="card" data-src="retention.mp3">
+      <audio preload="metadata" src="retention.mp3"></audio>
+      <div class="playbtn" aria-label="Play/Pause" role="button" tabindex="0">
+        <span class="icon">►</span>
+      </div>
+      <div class="title">Retention </div>
+      <div class="progress"><span></span></div>
+    </div>
+
+    <div class="card" data-src="meditation.mp3">
+      <audio preload="metadata" src="meditation.mp3"></audio>
+      <div class="playbtn" aria-label="Play/Pause" role="button" tabindex="0">
+        <span class="icon">►</span>
+      </div>
+      <div class="title">Meditation </div>
+      <div class="progress"><span></span></div>
+    </div>
+    
+    </div>
+  </div>
+<script>
+  const cards = [...document.querySelectorAll('.card')];
+  const audios = cards.map(c => c.querySelector('audio'));
+  function pauseAll(except=null) {
+    audios.forEach(a => { if (a!==except) { a.pause(); a.currentTime = a.currentTime; } });
+    cards.forEach(c => c.classList.remove('playing'));
+    cards.forEach(c => c.querySelector('.icon').textContent = '►');
+  }
+  cards.forEach(card => {
+    const audio = card.querySelector('audio');
+    const btn = card.querySelector('.playbtn');
+    const icon = card.querySelector('.icon');
+    const bar = card.querySelector('.progress span');
+
+    function toggle() {
+      if (audio.paused) {
+        pauseAll(audio);
+        audio.play();
+        card.classList.add('playing');
+        icon.textContent = '❚❚';
+      } else {
+        audio.pause();
+        card.classList.remove('playing');
+        icon.textContent = '►';
+      }
+    }
+    btn.addEventListener('click', toggle);
+    btn.addEventListener('keydown', (e) => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); toggle(); } });
+    audio.addEventListener('timeupdate', () => {
+      if (!isNaN(audio.duration) && audio.duration>0) {
+        bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+    });
+    audio.addEventListener('ended', () => {
+      card.classList.remove('playing');
+      icon.textContent = '►';
+      bar.style.width = '0%';
+    });
+  });
+</script>
+</body>
+</html>
